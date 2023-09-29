@@ -7,6 +7,7 @@ import Stc.example.Stc.Assyment.entity.FileData;
 import Stc.example.Stc.Assyment.entity.Item;
 import Stc.example.Stc.Assyment.service.ItemService;
 import io.swagger.v3.oas.annotations.headers.Header;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,23 +25,23 @@ private ItemService itemService;
 
 
     @GetMapping(value = "/find-file/{name}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public byte[] findAllFile(@PathVariable String name, @RequestHeader String email){
+    public byte[] findAllFile(@PathVariable  String name, @RequestHeader String email){
     return itemService.getFile(name, email);
 
     }
 
     @PostMapping("/space")
-    public void createSpace(@RequestBody SpaceRequest spaceRequest){
+    public void createSpace(@RequestBody @Valid SpaceRequest spaceRequest){
     itemService.createSpace(spaceRequest);
 
     }
     @PostMapping("/folder")
-    public void createFolder(@RequestBody FolderRequest folderRequest){
+    public void createFolder(@RequestBody @Valid FolderRequest folderRequest){
         itemService.createFolder(folderRequest);
 
     }
-    @PostMapping(value = "/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void createFile(FileRequest fileRequest) throws IOException {
+    @PostMapping( value = "/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void createFile(@Valid FileRequest fileRequest) throws IOException {
     itemService.createFile(fileRequest);
 
     }
